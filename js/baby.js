@@ -33,38 +33,46 @@ babyObj.prototype.init = function () {
 
 }
 babyObj.prototype.draw = function () {
-    //ctx1
-    //lerp x,y 是将当前值趋向目标值 就是当前值- 目标值再乘以一个百分比
-    this.x = lerpDistance(mom.x,this.x,0.99);
-    this.y = lerpDistance(mom.y,this.y,0.99); //这个百分比越小运动越快
+        //ctx1
+        //lerp x,y 是将当前值趋向目标值 就是当前值- 目标值再乘以一个百分比
+        this.x = lerpDistance(mom.x,this.x,0.99);
+        this.y = lerpDistance(mom.y,this.y,0.99); //这个百分比越小运动越快
 
-    //尾巴游动的动作
-    this.babyTailTimer += deltaTime;
-    if(this.babyTailTimer > 50){
-        this.babyTailCount = (this.babyTailCount + 1) %8;
-        this.babyTailTimer %= 50;
-    }
-    //眼睛眨
-    this.babyEyeTimer += deltaTime;
-    if(this.babyEyeTimer > this.babyEyeInterval){
-        //开始眼睛的动作
-        this.babyEyeCount = (this.babyEyeCount + 1) %2;
-        this.babyEyeTimer %= this.babyEyeInterval;
-        if(this.babyEyeCount == 0){
-            this.babyEyeInterval = Math.random() * 1500 + 2000;
+        //尾巴游动的动作
+        this.babyTailTimer += deltaTime;
+        if(this.babyTailTimer > 50){
+            this.babyTailCount = (this.babyTailCount + 1) %8;
+            this.babyTailTimer %= 50;
         }
-        else this.babyEyeInterval = 200;
-    }
-    //身体变色
-    this.babyBodyTimer += deltaTime;
-    if(this.babyBodyTimer > 300){
-        this.babyBodyCount = this.babyBodyCount + 1;
-        this.babyBodyTimer %= 300;
-        if(this.babyBodyCount > 19) {
-            this.babyBodyCount = 19;
-            //gameOver
-            data.gameOver = true;
+        //眼睛眨
+        this.babyEyeTimer += deltaTime;
+        if(this.babyEyeTimer > this.babyEyeInterval){
+            //开始眼睛的动作
+            this.babyEyeCount = (this.babyEyeCount + 1) %2;
+            this.babyEyeTimer %= this.babyEyeInterval;
+            if(this.babyEyeCount == 0){
+                this.babyEyeInterval = Math.random() * 1500 + 2000;
+            }
+            else this.babyEyeInterval = 200;
         }
+    if(StartGame){
+        //只有在开始游戏后，才会有小鱼的开始变色。
+        
+        //身体变色
+        this.babyBodyTimer += deltaTime;
+        if(this.babyBodyTimer > 300){
+            this.babyBodyCount = this.babyBodyCount + 1;
+            this.babyBodyTimer %= 300;
+            if(this.babyBodyCount > 19) {
+                this.babyBodyCount = 19;
+                //gameOver
+                data.gameOver = true;
+            }
+        }
+        
+    }
+    else{
+        this.babyBodyCount = 0;
     }
     //delta angle 计算目标的角度值
     //Math.atan2(y,x)
@@ -82,4 +90,5 @@ babyObj.prototype.draw = function () {
     ctx1.drawImage(babyBody[this.babyBodyCount],-babyBody[this.babyBodyCount].width * 0.5,-babyBody[this.babyBodyCount].height * 0.5);
     ctx1.drawImage(babyEye[this.babyEyeCount],-babyEye[this.babyEyeCount].width * 0.5,-babyEye[this.babyEyeCount].height * 0.5);
     ctx1.restore();
+    
 }

@@ -29,6 +29,8 @@ var wave;
 var mx;
 var my;//这两个值代表着鼠标移动的数值
 
+var StartGame = false;
+
 document.body.onload = game; //在body加载完成后调用该函数
 function game(){
 	init();
@@ -101,7 +103,9 @@ function init(){
         dustPic[i].src = "./src/dust" + i + ".png";
     }
 
+    can1.addEventListener('click',clickMouse);
     can1.addEventListener('mousemove', onMouseMove,false);  //这样就追踪到了鼠标
+    
     mx = canWidth *0.5;
     my = canHeight * 0.5;//初始化在中间
 
@@ -127,14 +131,25 @@ function gameloop(){
     data.draw();
     wave.draw();
     dust.draw();
+
+    if(!StartGame)
+        ctx1.fillText("Touch anywhere to start the game!",canWidth*0.5,canHeight*0.5);
+}
+function clickMouse(e){
+    StartGame = true;
+    mom.bigBodyCount = 0;
+    if(data.gameOver){
+        data.gameOver = false;
+        game();
+    }
 }
 function onMouseMove(e) {
-    if(!data.gameOver){
+    
+    if(!data.gameOver && StartGame ){
         if(e.offsetX || e.layerX){
             mx = e.offsetX == undefined ? e.layerX : e.offsetX;
             my = e.offsetY == undefined ? e.layerY : e.offsetY;
             //console.log(mx)
         }
     }
-
 }

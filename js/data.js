@@ -40,6 +40,8 @@ dataObj.prototype.draw = function () {
         }
         ctx1.fillStyle = "rgba(255,255,255,"+this.alpha+")";
         ctx1.fillText("GAMEOVER",canWidth*0.5,canHeight*0.5);
+        ctx1.font =  "20px Vardana";
+        ctx1.fillText("if you want to restart ,touch anywhere!",canWidth*0.5,canHeight*0.5 +200);
     }
     ctx1.restore();
 }

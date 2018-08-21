@@ -2,7 +2,7 @@
  * Created by lenovo on 2018/8/10.
  */
 function momFruitcollision() {
-    if(!data.gameOver){
+    if(!data.gameOver && StartGame ){
         for(var i=0;i<fruit.num;i++){
             if(fruit.alive[i]){
                 //计算距离
@@ -28,7 +28,7 @@ function momFruitcollision() {
     }
 }
 function momBabyCollision() {
-    if(!data.gameOver  && data.fruitNum!=0){
+    if(!data.gameOver  && data.fruitNum!=0 && StartGame ){
         var l = calLength2(baby.x,baby.y,mom.x,mom.y);
         if( l < 900){
             wave.bron(baby.x,baby.y,"baby");
